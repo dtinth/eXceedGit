@@ -1,0 +1,13 @@
+#!/bin/bash
+USERNAME=$1
+DIR=/git/users/$USERNAME
+PASSWORD=$2
+
+set -e
+set -v
+
+useradd -d $DIR -m -s /usr/bin/git-shell "$USERNAME"
+echo "$USERNAME:$PASSWORD" | chpasswd
+git init --bare "$DIR/repo.git"
+cd "$DIR/repo.git"
+
