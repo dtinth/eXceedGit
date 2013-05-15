@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Git</title>
+<style>
+form {
+	text-align: center;
+	padding: 50px;
+}
+input {
+	font: 40px sans-serif;
+}
+</style>
+
+<form action="/newuser" method="post">
+	<input type="hidden" name="token" value="<%= token %>">
+	<input type="submit" value="Create New Git Repository">
+</form>

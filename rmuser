@@ -1,0 +1,12 @@
+#!/bin/bash
+USERNAME=$1
+DIR=/git/users/$USERNAME
+
+set -e
+set -v
+set -n # not working
+
+skill -KILL -u "$USERNAME"
+deluser "$USERNAME"
+rm -rf "$DIR"
+
