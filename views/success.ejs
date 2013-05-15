@@ -5,9 +5,18 @@
 body {
 	font: 30px sans-serif;
 }
+.important {
+	font-size: 20px;
+}
+.important b {
+	color: red;
+}
 </style>
 
 <h1>Repo Create Success</h1>
 
 <p><b>Git URL: </b><%= username %>@<%= ip %>:repo.git</p>
 <p><b>Password: </b><code><%= password %></code>
+<p class="important">
+<b>Important:</b> You must remember your Git URL and password. To save, press Ctrl+S (Windows) or &#x2318;S (Mac)
+</p>
