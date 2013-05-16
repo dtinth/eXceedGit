@@ -71,11 +71,20 @@ app.post('/newuser', function(req, res, next) {
 	queue = queue.then(nextId).then(work).fail(fail);
 })
 
+var ansi2html = require('ansi2html')
 app.get('/log/:username', function(req, res, next) {
-	if (!req.param('username').match(/^git[a-z0-9]$) {
+	if (!req.param('username').match(/^git[a-z0-9]+$/)) {
 	  	return next()
 	}
-
+	var username = req.param('username')
+	res.locals.username = username
+	shelljs.exec('./getlog ' + username, { silent: true }, function(code, output) {
+	  	if (code != 0) {
+		  	return res.render('log', { repo: false })
+		}
+		output = ansi2html(output)
+		return res.render('log', { repo: true, output: output })
+	})
 })
 
 app.get('/', function(req, res, next) {

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Git Log for <%= username %></title>
+<style>
+body {
+	font: 30px sans-serif;
+        background: black;
+        color: white;
+}
+.important {
+	font-size: 20px;
+}
+.important b {
+	color: red;
+}
+.center { text-align: center }
+.empty { color: #fdd; }
+.empty b { color: #faa; }
+pre { font: 15px Consolas, Bitstream Vera Sans Mono, Menlo, Monaco, sans-serif; }
+a { color: #aaa; position: absolute; top: 20px; right: 20px; font-size: 40px; }
+</style>
+
+<h1>Git Log for <%= username %> <a onclick="location.reload()" href="javascript://">(reload)</a></h1>
+
+<% if (repo) { %>
+<pre><%- output %></pre>
+<% } else { %>
+<p class="empty"><b>Repository is empty!</b> Please push something to the repo...</p>
+<% } %>

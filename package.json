@@ -8,7 +8,7 @@
     "express": "~3.2.4",
     "q": "~0.9.3",
     "shelljs": "~0.1.4",
-    "ansi_up": "~1.0.0"
+    "ansi2html": "0.0.0"
   },
   "devDependencies": {},
   "scripts": {
