@@ -38,9 +38,25 @@ app.set('view engine', 'ejs')
 app.use(express.logger())
 app.use(express.cookieParser('derp'))
 app.use(express.bodyParser())
+
+var active = 0
+
+var protector = (function() {
+  var db = {}
+  var check = function(id) {
+	if (!db[id]) return true
+	if (new Date().getTime() < db[id]) return false
+	return true
+  }
+  var remember = function(id) {
+	db[id] = new Date().getTime() + 10 * 1000
+  }
+  return { check: check, remember: remember }
+})()
+
 app.post('/newuser', function(req, res, next) {
 	if (req.param('token') + '' != req.signedCookies.token) {
-		res.send(400, 'invalid cookie<br>' + req.param('token') + '<br>' + req.signedCookies.token)
+		res.send(400, 'invalid token')
 		return
 	}
 	var work = function(username) {
@@ -64,11 +80,21 @@ app.post('/newuser', function(req, res, next) {
 		})
 		res.cookie('token', '', { signed: true })
 		res.render('success', { username: username, password: password, ip: process.env.IP })
+		return defer.promise
 	}
 	var fail = function(e) {
 		res.send(400, 'error' + e.stack)
 	}
-	queue = queue.then(nextId).then(work).fail(fail);
+	active ++
+	console.log('Queue length: ' + active)
+	queue = queue.then(nextId).then(work).fail(fail).fin(function() {
+	  	active --
+		console.log('Queue length: ' + active)
+  	});
+})
+
+app.all('/active', function(req, res, next) {
+  	return res.send(active + '')
 })
 
 var ansi2html = require('ansi2html')
