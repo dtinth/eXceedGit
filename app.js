@@ -13,11 +13,13 @@ function random() {
 	return Math.random() + '' + Math.random() + '' + new Date()
 }
 
+var write = fs.createWriteStream('users.txt', { flags: 'a', encoding: 'utf-8', mode: 0600 })
+
 var nextId = function() {
 	var id
 	console.log('next id')
 	return Q.ninvoke(fs, 'readFile', 'usercount.txt', 'utf-8')
-		.then(function(c) { id = parseInt(c, 10) })
+		.then(function(c) { id = parseInt(c, 10) }, function() { id = 0 })
 		.then(function() {
 			console.log('id')
 			return Q.ninvoke(fs, 'writeFile', 'usercount.txt', id + 1 + '')
@@ -52,6 +54,7 @@ app.post('/newuser', function(req, res, next) {
 		}
 		console.log(username)
 		var defer = Q.defer()
+		write.write(username + ':' + password)
 		shelljs.exec('./newuser ' + username + ' ' + password, function(code, output) {
 			if (code == 0) {
 				defer.resolve()
@@ -67,6 +70,14 @@ app.post('/newuser', function(req, res, next) {
 	}
 	queue = queue.then(nextId).then(work).fail(fail);
 })
+
+app.get('/log/:username', function(req, res, next) {
+	if (!req.param('username').match(/^git[a-z0-9]$) {
+	  	return next()
+	}
+
+})
+
 app.get('/', function(req, res, next) {
 	res.set('Pragma', 'no-cache')
 	res.set('Cache-Control', 'no-cache')
