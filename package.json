@@ -1,0 +1,24 @@
+{
+  "name": "eXceedGit",
+  "version": "0.0.1",
+  "description": "ERROR: No README.md file found!",
+  "main": "app.js",
+  "dependencies": {
+    "ejs": "~0.8.4",
+    "express": "~3.2.4",
+    "q": "~0.9.3",
+    "shelljs": "~0.1.4",
+    "ansi_up": "~1.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/dtinth/eXceedGit.git"
+  },
+  "author": "Thai Pangsakulyanont <org.yi.dttvb@gmail.com>",
+  "license": "MIT",
+  "gitHead": "292c3e9ead54fe62a960d394d858612791b7bca2"
+}
