@@ -23,11 +23,11 @@ var nextId = function() {
 			return Q.ninvoke(fs, 'writeFile', 'usercount.txt', id + 1 + '')
 		})
 		.then(function() {
-			var a = '0000' + id
-			a = a.substr(a.length - 4)
-			var b = '00' + Math.floor(Math.random() * 100)
-			b = b.substr(b.length - 4)
-			return 'git' + a + b
+			var a = '000' + (1296 + id).toString(36)
+			a = a.substr(a.length - 3)
+			var b = '0' + Math.floor(Math.random() * 36).toString(36)
+			b = b.substr(b.length - 1)
+			return 'git' + a + '1' + b
 		})
 }
 
